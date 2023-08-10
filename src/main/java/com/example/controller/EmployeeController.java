@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Employee;
+import com.example.form.UpdateEmployeeForm;
 import com.example.service.EmployeeService;
 
 @Controller
@@ -52,5 +53,27 @@ public class EmployeeController {
         model.addAttribute("employee", employee);
         // 従業員情報画面へフォワードする
         return "/employee/detail";
+    }
+    /**
+     * 従業員詳細(ここでは扶養⼈数のみ)を更新する。
+     * - 送られてきたリクエストパラメータのidを使⽤して、Employeeドメインを主キー検索する
+     * - 送られてきたリクエストパラメータの扶養⼈数を、Employeeドメインの扶養人数に上書きする
+     * - employeeServiceのupdate()を呼び出し、Employeeを引数に渡す
+     * - 従業員一覧画面にリダイレクトする
+     * @param employeeForm
+     * @return 従業員一覧画面にリダイレクトする
+     */
+    @GetMapping("/update")
+    public String update(UpdateEmployeeForm employeeForm) {
+        // Employeeドメインを主キー検索する
+        Integer id = Integer.parseInt(employeeForm.getId());
+        Employee employee = employeeService.showDetail(id);
+        
+        // リクエストパラメータの扶養⼈数を、Employeeドメインの扶養人数に上書きする
+        Integer newDependentsCount = Integer.parseInt(employeeForm.getId());
+        employee.setDependentsCount(newDependentsCount);
+        
+        // 従業員一覧画面にリダイレクトする
+        return "redirect:/employee/showList";
     }
 }
