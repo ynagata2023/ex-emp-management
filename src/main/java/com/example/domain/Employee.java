@@ -7,7 +7,7 @@ public class Employee {
     private Integer id;
     /** 名前 */
     private String name;
-    /** 印象 */
+    /** 写真 */
     private String image;
     /** 性別*/
     private String gender;
@@ -23,6 +23,9 @@ public class Employee {
     private Integer telephone;
     /** 給料 */
     private Integer salary;
+    /** 性格 */
+    private String characteristics;
+    
     /** 扶養家族数 */
     private Integer dependentsCount;
 
@@ -86,6 +89,12 @@ public class Employee {
     public void setSalary(Integer salary) {
         this.salary = salary;
     }
+    public String getCharacteristics() {
+        return characteristics;
+    }
+    public void setCharacteristics(String characteristics) {
+        this.characteristics = characteristics;
+    }
     public Integer getDependentsCount() {
         return dependentsCount;
     }
@@ -96,6 +105,7 @@ public class Employee {
     public String toString() {
         return "Employee [id=" + id + ", name=" + name + ", image=" + image + ", gender=" + gender + ", hireDate="
                 + hireDate + ", mailAddress=" + mailAddress + ", zipCode=" + zipCode + ", address=" + address
-                + ", telephone=" + telephone + ", salary=" + salary + ", dependentsCount=" + dependentsCount + "]";
+                + ", telephone=" + telephone + ", salary=" + salary + ", characteristics=" + characteristics
+                + ", dependentsCount=" + dependentsCount + "]";
     }
 }
