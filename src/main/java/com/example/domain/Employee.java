@@ -16,7 +16,7 @@ public class Employee {
     /** メールアドレス */
     private String mailAddress;
     /** 郵便番号 */
-    private Integer zipCode;
+    private String zipCode;
     /** 住所 */
     private String address;
     /** 電話番号 */
@@ -62,10 +62,10 @@ public class Employee {
     public void setMailAddress(String mailAddress) {
         this.mailAddress = mailAddress;
     }
-    public Integer getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
-    public void setZipCode(Integer zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
     public String getAddress() {
