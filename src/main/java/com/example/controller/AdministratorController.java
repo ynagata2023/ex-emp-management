@@ -74,7 +74,7 @@ public class AdministratorController {
         
         // AdministratorにServiceのメソッド戻り値を代入する
         Administrator administrator = 
-        administratorService.findByMailAddressAndPassword(
+        administratorService.login(
             // 受け取ったメールアドレス  パスワード
             loginForm.getMailAddress(), loginForm.getPassword()
             );
