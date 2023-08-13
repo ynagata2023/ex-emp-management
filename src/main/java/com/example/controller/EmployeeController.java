@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Employee;
@@ -63,7 +64,7 @@ public class EmployeeController {
      * @param employeeForm
      * @return 従業員一覧画面にリダイレクトする
      */
-    @GetMapping("/update")
+    @PostMapping("/update")
     public String update(UpdateEmployeeForm employeeForm) {
         // Employeeドメインを主キー検索する
         Integer id = Integer.parseInt(employeeForm.getId());
@@ -72,6 +73,9 @@ public class EmployeeController {
         // リクエストパラメータの扶養⼈数を、Employeeドメインの扶養人数に上書きする
         Integer newDependentsCount = Integer.parseInt(employeeForm.getId());
         employee.setDependentsCount(newDependentsCount);
+
+        // 従業員情報を更新する
+        employeeService.update(employee);
         
         // 従業員一覧画面にリダイレクトする
         return "redirect:/employee/showList";
