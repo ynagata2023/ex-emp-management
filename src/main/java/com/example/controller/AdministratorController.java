@@ -92,4 +92,10 @@ public class AdministratorController {
         return "redirect:/employee/showList";
     }
 
+    @GetMapping("/logout")
+    public String logout(LoginForm loginForm) {
+        session.invalidate();
+        return "redirect:/";
+    }
+
 }
