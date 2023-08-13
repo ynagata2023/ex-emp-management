@@ -94,8 +94,15 @@ public class EmployeeRepository {
      * @param employee 従業員情報
      */
     public void update(Employee employee) {
-        SqlParameterSource param 
-            = new MapSqlParameterSource().addValue("id", employee.getId());
+        SqlParameterSource param = new MapSqlParameterSource()
+        .addValue("name", employee.getName())
+        .addValue("image", employee.getImage())
+        .addValue("gender", employee.getGender())
+        .addValue("hireDate", employee.getHireDate())
+        .addValue("mail_address", employee.getMailAddress())
+        .addValue("zip_code", employee.getZipCode())
+        .addValue("address", employee.getAddress())
+        .addValue("id", employee.getId());
         // 更新処理
         namedParameterJdbcTemplate.update(updateSql, param);
 
