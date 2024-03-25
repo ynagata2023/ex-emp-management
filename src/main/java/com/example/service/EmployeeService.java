@@ -17,7 +17,7 @@ public class EmployeeService {
      * 従業員情報を全件取得する
      * return 全従業員リスト
      */
-    public List<Employee> findAll() {
+    public List<Employee> showList() {
         return employeeRepository.findAll();
     }
 
@@ -26,7 +26,7 @@ public class EmployeeService {
      * @param id 従業員ID
      * @return IDに一致する従業員情報
      */
-    public Employee findById(Integer id) {
+    public Employee showDetail(Integer id) {
         return employeeRepository.load(id);
     }
 

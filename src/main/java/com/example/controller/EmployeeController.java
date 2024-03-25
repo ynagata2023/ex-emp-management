@@ -27,7 +27,7 @@ public class EmployeeController {
      */
     @GetMapping("/showList")
     public String showList(Model model) {
-        List<Employee> employeeList = employeeService.findAll();
+        List<Employee> employeeList = employeeService.showList();
         model.addAttribute("employeeList", employeeList);
         return "/employee/list";
     }
@@ -41,7 +41,7 @@ public class EmployeeController {
      */
     @GetMapping("/showDetail")
     public String showDetail(String id, Model model) {
-        Employee employee = employeeService.findById(Integer.parseInt(id));
+        Employee employee = employeeService.showDetail(Integer.parseInt(id));
         model.addAttribute("employee", employee);
         return "/employee/detail";
     }
@@ -55,7 +55,7 @@ public class EmployeeController {
     @PostMapping("/update")
     public String update(UpdateEmployeeForm employeeForm) {
         Integer id = Integer.parseInt(employeeForm.getId());
-        Employee employee = employeeService.findById(id);
+        Employee employee = employeeService.showDetail(id);
         Integer newDependentsCount = Integer.parseInt(employeeForm.getDependentsCount());
         employee.setDependentsCount(newDependentsCount);
         
