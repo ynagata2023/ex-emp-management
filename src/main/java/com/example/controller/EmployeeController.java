@@ -57,10 +57,12 @@ public class EmployeeController {
     public String update(UpdateEmployeeForm employeeForm) {
         Integer id = Integer.parseInt(employeeForm.getId());
         Employee employee = employeeService.findById(id);
-
-        Integer newDependentsCount = Integer.parseInt(employeeForm.getId());
+        
+        Integer newDependentsCount = Integer.parseInt(employeeForm.getDependentsCount());
+        System.out.println("newDependentsCount: " + newDependentsCount);
         employee.setDependentsCount(newDependentsCount);
-
+        
+        System.out.println("Update Employee: " + employee);
         employeeService.update(employee);
 
         return "redirect:/employee/showList";
