@@ -42,7 +42,6 @@ public class EmployeeController {
     @GetMapping("/showDetail")
     public String showDetail(String id, Model model) {
         Employee employee = employeeService.findById(Integer.parseInt(id));
-        System.out.println(employee);
         model.addAttribute("employee", employee);
         return "/employee/detail";
     }
@@ -57,14 +56,10 @@ public class EmployeeController {
     public String update(UpdateEmployeeForm employeeForm) {
         Integer id = Integer.parseInt(employeeForm.getId());
         Employee employee = employeeService.findById(id);
-        
         Integer newDependentsCount = Integer.parseInt(employeeForm.getDependentsCount());
-        System.out.println("newDependentsCount: " + newDependentsCount);
         employee.setDependentsCount(newDependentsCount);
         
-        System.out.println("Update Employee: " + employee);
         employeeService.update(employee);
-
         return "redirect:/employee/showList";
     }
 }
