@@ -21,63 +21,48 @@ public class EmployeeController {
 
     /**
      * 従業員一覧を出力する
-     * - employeeServiceのshowList()を呼び出し、従業員一覧を取得する
-     * - 取得した従業員一覧をリクエストスコープに格納する
+     * 
      * @param model リクエストスコープ
-     * @return 従業員一覧画面へフォワードする
+     * @return 従業員一覧画面
      */
     @GetMapping("/showList")
     public String showList(Model model) {
-        // 従業員一覧を取得する
-        List<Employee> employeeList = employeeService.showList();
-        // 取得した従業員一覧をリクエストスコープに格納する
+        List<Employee> employeeList = employeeService.findAll();
         model.addAttribute("employeeList", employeeList);
-        // 従業員一覧画面へフォワードする
         return "/employee/list";
     }
+
     /**
      * 従業員IDを元に、従業員情報を表示する
-     * - リクエストパラメータのidはStringなので、Integerに変換する
-     * - Employeeオブジェクトを生成する
-     * - ServiceのshowDetail()を呼び出し、IDに一致する従業員情報をEmployeeへ格納する
-     * - Employeeオブジェクトをリクエストスコープにセットそる
-     * @param id String 従業員ID
+     * 
+     * @param id    String 従業員ID
      * @param model リクエストスコープ
-     * @return 従業員情報画面へフォワードする
+     * @return 従業員情報画面
      */
     @GetMapping("/showDetail")
     public String showDetail(String id, Model model) {
-                                                        // Integerへ変換する
-        Employee employee = employeeService.showDetail(Integer.parseInt(id));
-
-        // リクエストスコープにセットする
+        Employee employee = employeeService.findById(Integer.parseInt(id));
+        System.out.println(employee);
         model.addAttribute("employee", employee);
-        // 従業員情報画面へフォワードする
         return "/employee/detail";
     }
+
     /**
-     * 従業員詳細(ここでは扶養⼈数のみ)を更新する。
-     * - 送られてきたリクエストパラメータのidを使⽤して、Employeeドメインを主キー検索する
-     * - 送られてきたリクエストパラメータの扶養⼈数を、Employeeドメインの扶養人数に上書きする
-     * - employeeServiceのupdate()を呼び出し、Employeeを引数に渡す
-     * - 従業員一覧画面にリダイレクトする
+     * 従業員詳細を更新する。
+     * 
      * @param employeeForm
-     * @return 従業員一覧画面にリダイレクトする
+     * @return 従業員一覧画面リダイレクト 2重登録防止のため
      */
     @PostMapping("/update")
     public String update(UpdateEmployeeForm employeeForm) {
-        // Employeeドメインを主キー検索する
         Integer id = Integer.parseInt(employeeForm.getId());
-        Employee employee = employeeService.showDetail(id);
-        
-        // リクエストパラメータの扶養⼈数を、Employeeドメインの扶養人数に上書きする
+        Employee employee = employeeService.findById(id);
+
         Integer newDependentsCount = Integer.parseInt(employeeForm.getId());
         employee.setDependentsCount(newDependentsCount);
 
-        // 従業員情報を更新する
         employeeService.update(employee);
-        
-        // 従業員一覧画面にリダイレクトする
+
         return "redirect:/employee/showList";
     }
 }
