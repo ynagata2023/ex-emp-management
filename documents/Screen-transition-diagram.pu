@@ -1,0 +1,46 @@
+@startuml 画面遷移図
+title 画面遷移図
+hide empty description
+skinparam state {
+  BackgroundColor<<MODAL>> orange
+  BackgroundColor<<GLOBAL>> #cccccc
+}
+state "ナビゲーションバー" as nav {
+  state "ログアウトボタン" as logout
+}
+
+state "ログイン" as login {
+  state "ログインフォーム(一般用)" as loginEmpForm
+  state "ログインフォーム(管理者用)" as loginAdm
+}
+
+state 一般ユーザー用 {
+  state "従業員リスト" as listEmp
+  state "従業員詳細" as detailEmp
+
+}
+
+state 管理者用 {
+  state "従業員詳細(管理者用)" as empDetailAdm
+  state "従業員リスト(管理者用)" as listEmpAdm
+  state "従業員新規登録" as addEmp
+  state "管理者新規登録" as addAdm
+}
+
+[*]          --> login
+loginEmpForm --> listEmp: 一般ユーザとしてログイン
+listEmp      --> detailEmp
+listEmp      <-- detailEmp
+
+loginAdm     --> listEmpAdm: 管理者としてログイン
+listEmpAdm   --> empDetailAdm
+
+nav          <-- login: 未ログイン
+nav          --> listEmp: 一般ユーザログイン済み
+nav          --> listEmpAdm: 管理者ログイン済み
+nav          --> addAdm: 管理者ログイン済み
+nav          --> addEmp: 管理者ログイン済み
+
+logout --> login
+
+@enduml
