@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.example.domain.Administrator;
 import com.example.domain.Employee;
 
 @Repository
@@ -21,6 +22,8 @@ public class EmployeeRepository {
     // データベースアクセス用テンプレート
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    private static final RowMapper<Administrator> ADMINISTRATOR_ROW_MAPPER = new BeanPropertyRowMapper<>(Administrator.class);
 
     /** 全件取得SQL */
     private static String findAllSql = """
@@ -108,5 +111,20 @@ public class EmployeeRepository {
                 .addValue("dependents_count", employee.getDependentsCount());
         namedParameterJdbcTemplate.update(updateSql, param);
 
+    }
+
+    public Administrator findByMailAddressAndPassword(String mailAddress, String password) {
+        String sql = "SELECT id, name, mail_address, password FROM administrators " +
+                "WHERE mail_address = :mailAddress AND password = :password;";
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("mailAddress", mailAddress)
+                .addValue("password", password);
+        List<Administrator> administrators = namedParameterJdbcTemplate.query(sql, param, ADMINISTRATOR_ROW_MAPPER);
+
+        if (administrators.size() == 0) {
+            return null;
+        } else {
+            return administrators.get(0);
+        }
     }
 }
